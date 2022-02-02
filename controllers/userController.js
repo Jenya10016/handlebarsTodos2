@@ -34,6 +34,21 @@ module.exports = {
 			res.json(e);
 		}
 	},
+	getAllUsersPt2: async (req, res) => {
+		try {
+			const usersData = await User.findAll({});
+
+			const users = usersData.map(user => user.get({ plain: true }));
+
+
+			res.render('allUsersPt2', {
+				users,
+				favoriteFood: 'Ice cream sandwich',
+			});
+		} catch (e) {
+			res.json(e);
+		}
+	},
 
 	getUserById: async (req, res) => {
 		try {
