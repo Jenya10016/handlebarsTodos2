@@ -4,6 +4,7 @@ const {
 	getUserById,
 	login,
 	signupHandler,
+	logout,
 } = require('../../../controllers/userController');
 // /api/users
 router.route('/')
@@ -11,6 +12,7 @@ router.route('/')
 
 router.post('/signup', signupHandler);
 router.post('/login', login);
+router.post('/logout', logout);
 
 router.route('/:userId')
 	.get(getUserById);

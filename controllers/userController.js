@@ -55,8 +55,8 @@ module.exports = {
 			console.log(userFound.password, 72);
 			console.log(req.body.password, 73);
 			if (userFound.password === req.body.password) {
-				console.log('im hit', 75);
 				req.session.save(() => {
+					req.session.loggedIn = true;
 					req.session.user = userFound;
 					res.json({ success: true });
 				});
@@ -95,7 +95,12 @@ module.exports = {
 			return res.redirect('/todos');
 		}
 		res.render('signUp');
-	}
+	},
+	logout: (req, res) => {
+		req.session.destroy(() => {
+			res.send({ status: true });
+		});
+	},
 }
 // /signup
 // Create a function in the controller that checks if a user is already logged in
