@@ -19,26 +19,8 @@ module.exports = {
 		}
 	},
 //	getting users
-	getAllUsers: async (req, res) => {
-		req.session.save(() => {
-			if (req.session.visitCount) {
-				req.session.visitCount++;
-			} else {
-				req.session.visitCount = 1;
-			}
-		});
-		try {
-			const usersData = await User.findAll({});
-			const users = usersData.map(user => user.get({ plain: true }));
-			res.render('allUsers', {
-				users,
-				favoriteFood: 'Ice cream sandwich',
-				visitCount: req.session.visitCount,
-				loggedInUser: req.session.user || null,
-			});
-		} catch (e) {
-			res.json(e);
-		}
+	renderHomePage: async (req, res) => {
+		res.render('homepage');
 	},
 	getUserById: async (req, res) => {
 		req.session.save(() => {
@@ -81,6 +63,23 @@ module.exports = {
 			}
 		} catch (e) {
 			console.log(e);
+			res.json(e);
+		}
+	},
+	signupHandler: async (req, res) => {
+		const { email, username, password } = req.body;
+		try {
+			const createdUser = await User.create({
+				email,
+				username,
+				password,
+			});
+			req.session.save(() => {
+				req.session.loggedIn = true;
+				req.session.user = createdUser;
+				res.redirect('/todos');
+			});
+		} catch (e) {
 			res.json(e);
 		}
 	},

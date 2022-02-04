@@ -1,7 +1,8 @@
 const router = require('express').Router();
 const apiRoutes = require('./apiRoutes');
-const { getAllUsers, loginView, signupView } = require('../controllers/userController');
-router.get('/', getAllUsers);
+const { renderHomePage, loginView, signupView } = require('../controllers/userController');
+
+router.get('/', renderHomePage);
 router.get('/login', loginView);
 router.get('/signup', signupView);
 router.use('/api', apiRoutes);
