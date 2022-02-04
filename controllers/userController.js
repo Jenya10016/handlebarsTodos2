@@ -83,5 +83,22 @@ module.exports = {
 			console.log(e);
 			res.json(e);
 		}
+	},
+	loginView: (req, res) => {
+		if (req.session.loggedIn) {
+			return res.redirect('/todos');
+		}
+		res.render('login');
+	},
+	signupView: (req, res) => {
+		if (req.session.loggedIn) {
+			return res.redirect('/todos');
+		}
+		res.render('signUp');
 	}
 }
+// /signup
+// Create a function in the controller that checks if a user is already logged in
+// if so, redirect them to /todos
+// if not, render the signup page
+// this should be rendered on /signup endpoint
